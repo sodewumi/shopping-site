@@ -111,7 +111,24 @@ class Customer(object):
     """
 
     # TODO: need to implement this
+    def __init__(self, email, fname, username, password):
+        self.email = email
+        self.fname = fname
+        self.username = username
+        self.password = password
 
+    def __repr__(self):
+        """Convenience method to show information about melon in console."""
+
+        return "<Customer: %s, %s, %s>" % (
+            self.email, self.fname, self.username, self.password)
+
+
+    # def __repr__(self):
+    #     """Convenience method to show information about melon in console."""
+
+    #     return "<Melon: %s, %s, %s>" % (
+    #         self.id, self.common_name, self.price_str())
     @classmethod
     def get_by_email(cls, email):
         """Query for a specific melon in the database by the primary key"""
