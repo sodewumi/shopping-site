@@ -7,7 +7,7 @@ Authors: Joel Burton, Christian Fernandez, Meggie Mahnken.
 """
 
 
-from flask import Flask, render_template, redirect, flash, session
+from flask import Flask, render_template, redirect, flash, session, request
 import jinja2
 
 import model
@@ -101,8 +101,8 @@ def add_to_cart(id):
     # bound to the key, which is a nested dictionary in session "cart". This nested 
     # dictionary holds the key melon.id 
     session["cart"][melon_id_str] = session["cart"].get(melon_id_str, 0) +1
+    
     flash("Succesfully added to cart.")
-
     return redirect("/cart")
 
 
@@ -115,6 +115,19 @@ def show_login():
     return render_template("login.html")
 
 
+# @app.route('/login', methods=['POST', 'GET'])
+# def login():
+#     error = None
+#     if request.method == 'POST':
+#         if valid_login(request.form['username'],
+#                        request.form['password']):
+#             return log_the_user_in(request.form['username'])
+#         else:
+#             error = 'Invalid username/password'
+#     # the code below is executed if the request method
+#     # was GET or the credentials were invalid
+#     return render_template('login.html', error=error)
+
 @app.route("/login", methods=["POST"])
 def process_login():
     """Log user into site.
@@ -122,10 +135,23 @@ def process_login():
     Find the user's login credentials located in the 'request.form'
     dictionary, look up the user, and store them in the session.
     """
+    login_email = request.form['email']
+    login_password = request.form['password']
 
-    # TODO: Need to implement this!
+    print "******************", login_email, "email"
+    print "******************", login_password, "password"
 
-    return "Oops! This needs to be implemented"
+    logged_in_user = model.Customer.get_by_email(login_email)
+    print logged_in_user
+    
+    if logged_in_user:
+        pass
+    else:
+        flash("Invalid Email")
+        return redirect("/login")
+
+    return "YAY! I POSTED A THING!"
+
 
 
 @app.route("/checkout")

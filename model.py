@@ -150,6 +150,9 @@ class Customer(object):
 
         return customer
 
+class CustomerDoesNotExist(LookupError):
+    """The email or password was not found in the customer table"""
+
 
 
 def db_connect():
