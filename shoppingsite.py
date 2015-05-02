@@ -106,13 +106,12 @@ def add_to_cart(id):
     return redirect("/cart")
 
 
-
-
 @app.route("/login", methods=["GET"])
 def show_login():
     """Show login form."""
 
     return render_template("login.html")
+
 
 @app.route("/login", methods=["POST"])
 def process_login():
@@ -124,21 +123,17 @@ def process_login():
     login_email = request.form['email']
     login_password = request.form['password']
 
-    print "******************", login_email, "email"
-    print "******************", login_password, "password"
-
-
     # returns None is the the customer's email isn't in the database
-    logged_in_user = model.Customer.get_by_email(login_email)
+    user_logging_in = model.Customer.get_by_email(login_email)
 
     
-    if logged_in_user:
+    if user_logging_in:
         # user submits inccorect password
-        if logged_in_user.password != login_password:
+        if user_logging_in.password != login_password:
             flash("Invalid Password")
             return redirect("/login")
         else:
-            session["logged_in_user_email"] = logged_in_user.email
+            session["logged_in_customer_email"] = user_logging_in.email
             print session
             return redirect('/melons')
 
@@ -146,11 +141,6 @@ def process_login():
         # user sumbits wrong email
         flash("Invalid Email")
         return redirect("/login")
-
-
-
-    return "YAY! I POSTED A THING!"
-
 
 
 @app.route("/checkout")
