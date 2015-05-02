@@ -37,7 +37,7 @@ def index():
 @app.route("/melons")
 def list_melons():
     """Return page showing all the melons ubermelon has to offer"""
-
+    print session
     melons = model.Melon.get_all()
     return render_template("all_melons.html",
                            melon_list=melons)
