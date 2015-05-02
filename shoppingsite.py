@@ -59,10 +59,7 @@ def show_melon(id):
 @app.route("/cart")
 def shopping_cart():
     """Display content of shopping cart."""
-    print session
 
-    # TODO: Display the contents of the shopping cart.
-    #   - The cart is a list in session containing melons added
     display_info = []
     total = 0
     
@@ -105,7 +102,6 @@ def add_to_cart(id):
     flash("Succesfully added to cart.")
     return redirect("/cart")
 
-
 @app.route("/login", methods=["GET"])
 def show_login():
     """Show login form."""
@@ -142,6 +138,16 @@ def process_login():
         flash("Invalid Email")
         return redirect("/login")
 
+@app.route("/signout")
+def process_logout():
+    """Allows the user to sign out of the website.
+
+    Removes the user's id from the session.
+    """
+    session.pop("logged_in_customer_email", None)
+
+    flash("You are now logged out. Thank you for visiting Ubermelon!")
+    return redirect('/melons')
 
 @app.route("/checkout")
 def checkout():

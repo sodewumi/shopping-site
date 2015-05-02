@@ -27,7 +27,7 @@
                 <!--checks if the users is logged in or out and changes the html
                 accordingly -->
                 {% if session.get("logged_in_customer_email") %}
-                  <li><a href="/login">Log Out</a></li>
+                  <li><a href="/signout">Log Out</a></li>
                 {% else %}
                   <li><a href="/login">Log In</a></li>
                 {% endif %}
