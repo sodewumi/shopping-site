@@ -101,7 +101,7 @@ def add_to_cart(id):
     # bound to the key, which is a nested dictionary in session "cart". This nested 
     # dictionary holds the key melon.id 
     session["cart"][melon_id_str] = session["cart"].get(melon_id_str, 0) +1
-    
+
     flash("Succesfully added to cart.")
     return redirect("/cart")
 
@@ -141,14 +141,22 @@ def process_login():
     print "******************", login_email, "email"
     print "******************", login_password, "password"
 
+
+    # returns None is the the customer's email isn't in the database
     logged_in_user = model.Customer.get_by_email(login_email)
-    print logged_in_user
+
     
     if logged_in_user:
-        pass
+        # user submits inccorect password
+        if logged_in_user.password != login_password:
+            flash("Invalid Password")
+            return redirect("/login")
     else:
+        # user sumbits wrong email
         flash("Invalid Email")
         return redirect("/login")
+
+
 
     return "YAY! I POSTED A THING!"
 
