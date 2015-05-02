@@ -132,7 +132,6 @@ def process_login():
             session["logged_in_customer_email"] = user_logging_in.email
             print session
             return redirect('/melons')
-
     else:
         # user sumbits wrong email
         flash("Invalid Email")
